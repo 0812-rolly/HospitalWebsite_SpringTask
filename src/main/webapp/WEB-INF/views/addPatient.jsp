@@ -25,7 +25,7 @@
             </tr>
             <tr>
                 <td>Phone number</td>
-                <td><input type="number" name="number" /></td>
+                <td><input type="tel" name="number" /></td>
             </tr>
             <tr>
                 <td>Password</td>
