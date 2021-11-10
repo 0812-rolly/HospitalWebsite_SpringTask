@@ -1,13 +1,15 @@
 package org.structure.services.impl;
 
-import org.structure.dao.MedicalCardDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.structure.repository.MedicalCardRepository;
 import org.structure.models.MedicalCard;
 import org.structure.services.MedicalCardService;
 
 import java.util.List;
 
 public class MedicalCardServiceImpl implements MedicalCardService {
-    private MedicalCardDAO medicalCardDAO;
+    @Autowired
+    private MedicalCardRepository medicalCardDAO;
 
     @Override
     public MedicalCard getMedicalCard(long id) {

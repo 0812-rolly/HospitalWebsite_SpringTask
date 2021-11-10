@@ -1,13 +1,15 @@
 package org.structure.services.impl;
 
-import org.structure.dao.RegistrationDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.structure.repository.RegistrationRepository;
 import org.structure.models.Registration;
 import org.structure.services.RegistrationService;
 
 import java.util.List;
 
 public class RegistrationServiceImpl implements RegistrationService {
-    private RegistrationDAO registrationDAO;
+    @Autowired
+    private RegistrationRepository registrationDAO;
 
     @Override
     public Registration getRegistrationById(long id) {
