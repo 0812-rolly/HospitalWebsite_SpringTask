@@ -3,13 +3,17 @@ package org.structure.models;
 import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name = "medCard")
 public class MedicalCard {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @OneToOne
     @JoinColumn(name = "patient_id", referencedColumnName = "id")
     private Patient patient;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "medCard")
     private List<Appointment> appointments;
 
@@ -23,13 +27,5 @@ public class MedicalCard {
 
     public void setPatient(Patient patient) {
         this.patient = patient;
-    }
-
-    public List<Appointment> getAppointments() {
-        return appointments;
-    }
-
-    public void setAppointments(List<Appointment> appointments) {
-        this.appointments = appointments;
     }
 }

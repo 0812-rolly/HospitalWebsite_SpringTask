@@ -13,6 +13,7 @@ public class Doctor {
     private String email;
     private String login;
     private String password;
+
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private Speciality speciality;

@@ -5,8 +5,8 @@
 </head>
 <body>
 <div align="center">
-    <h1>Update user form</h1>
-    <form action="/update-patient" method="post">
+    <h1>Update patient form</h1>
+    <form action="patient-update" method="post">
         <table>
         <tr>
             <td>Enter patient id</td>

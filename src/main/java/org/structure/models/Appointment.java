@@ -8,13 +8,17 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @OneToOne
     @JoinColumn(name = "registration_id", referencedColumnName = "id")
     private Registration registration;
+
     private String description;
+
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private Status status;
+
     @JoinColumn(name="patient_card_id", nullable = false)
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private MedicalCard medCard;
