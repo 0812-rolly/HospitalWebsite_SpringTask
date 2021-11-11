@@ -5,12 +5,8 @@
 <body>
 <div align="center">
     <h1>Add patient form</h1>
-    <form action="add-patient" method="post" >
+    <form action="patient-add" method="post" >
         <table>
-            <tr>
-                <td>Id</td>
-                <td><input type="text" name="id" /></td>
-            </tr>
             <tr>
                 <td>Full patient name</td>
                 <td><input type="text" name="name" /></td>
@@ -20,12 +16,12 @@
                 <td><input type="email" name="email" /></td>
             </tr>
             <tr>
-                <td>Login</td>
-                <td><input type="text" name="login" /></td>
-            </tr>
-            <tr>
                 <td>Phone number</td>
                 <td><input type="tel" name="number" /></td>
+            </tr>
+            <tr>
+                <td>Login</td>
+                <td><input type="text" name="login" /></td>
             </tr>
             <tr>
                 <td>Password</td>

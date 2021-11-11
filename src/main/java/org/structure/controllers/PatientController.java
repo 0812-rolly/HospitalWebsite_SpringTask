@@ -3,6 +3,7 @@ package org.structure.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.structure.models.Patient;
 import org.structure.services.PatientService;
@@ -13,31 +14,32 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
+@RequestMapping("patient")
 public class PatientController {
 
     private final PatientService patientService;
 
     public PatientController(PatientService patientService){ this.patientService = patientService;}
 
-    @GetMapping("/add-patient")
+    @GetMapping("/patient-add")
     public ModelAndView addPatientPage() {
         ModelAndView modelAndView= new ModelAndView("addPatient");
         return modelAndView;
     }
 
-    @GetMapping("/update-patient")
+    @GetMapping("/patient-update")
     public ModelAndView updatePatientPage() {
         ModelAndView modelAndView= new ModelAndView("updatePatient");
         return modelAndView;
     }
 
-    @GetMapping("/delete-patient")
+    @GetMapping("/patient-delete")
     public ModelAndView deletePatientPage() {
         ModelAndView modelAndView= new ModelAndView("deletePatient");
         return modelAndView;
     }
 
-    @GetMapping("/get-patients")
+    @GetMapping("/patients-get")
     public ModelAndView getPatientsRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ModelAndView modelAndView= new ModelAndView("getAllPatients");
         response.setContentType("text/html;charset=UTF-8");
@@ -46,19 +48,18 @@ public class PatientController {
         return modelAndView;
     }
 
-    @PostMapping("/add-patient")
+    @PostMapping("/patient-add")
     public ModelAndView addRequest(HttpServletRequest request) {
-        String id = request.getParameter("id");
         String name = request.getParameter("name");
         String number = request.getParameter("number");
         String email = request.getParameter("email");
         String login = request.getParameter("login");
         String password = request.getParameter("password");
-        addNewPatient(id, name, number, email, login, password);
+        addNewPatient(name, number, email, login, password);
         return new ModelAndView("addPatient");
     }
 
-    @PostMapping("/update-patient")
+    @PostMapping("/patient-update")
     public ModelAndView updateRequest(HttpServletRequest request) {
         String id = request.getParameter("id");
         String type = request.getParameter("parameter");
@@ -67,16 +68,15 @@ public class PatientController {
         return new ModelAndView("updatePatient");
     }
 
-    @PostMapping("/delete-patient")
+    @PostMapping("/patient-delete")
     public ModelAndView deleteRequest(HttpServletRequest request) {
         String id = request.getParameter("id");
         deletePatient(id);
         return new ModelAndView("deletePatient");
     }
 
-    private void addNewPatient(String id, String name, String number, String email, String login, String password){
+    private void addNewPatient(String name, String number, String email, String login, String password){
         Patient patient = new Patient();
-        patient.setId(Long.parseLong(id));
         patient.setFullName(name);
         patient.setPhoneNumber(number);
         patient.setEmail(email);
