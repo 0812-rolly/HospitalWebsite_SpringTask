@@ -1,31 +1,33 @@
 package org.structure.services.impl;
 
-import org.structure.dao.PatientDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.structure.repository.PatientRepository;
 import org.structure.models.Patient;
 import org.structure.services.PatientService;
 
 import java.util.List;
 
 public class PatientServiceImpl implements PatientService {
-    private PatientDAO patientDAO;
+    @Autowired
+    private PatientRepository patientRepository;
 
-    public PatientServiceImpl(PatientDAO patientDao) {
-        this.patientDAO = patientDao;
+    public PatientServiceImpl(PatientRepository patientRepository) {
+        this.patientRepository = patientRepository;
     }
 
     @Override
     public void addPatient(Patient patient) {
-        patientDAO.addPatient(patient);
+        patientRepository.save(patient);
     }
 
     @Override
     public Patient getPatient(Long id) {
-        return patientDAO.getPatient(id);
+        return patientRepository.getById(id);
     }
 
     @Override
     public List<Patient> getAllPatients() {
-        return patientDAO.getAllPatients();
+        return patientRepository.findAll();
     }
 
     @Override
@@ -47,11 +49,11 @@ public class PatientServiceImpl implements PatientService {
             patient.setPassword(newValue);
         }
 
-        patientDAO.updatePatient(patient);
+        patientRepository.save(patient);
     }
 
     @Override
     public void deletePatient(Long id) {
-        patientDAO.deletePatient(id);
+        patientRepository.deleteById(id);
     }
 }

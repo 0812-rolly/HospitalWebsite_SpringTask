@@ -1,13 +1,15 @@
 package org.structure.services.impl;
 
-import org.structure.dao.AppointmentDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.structure.models.Appointment;
+import org.structure.repository.AppointmentRepository;
 import org.structure.services.AppointmentService;
 
 import java.util.List;
 
 public class AppointmentServiceImpl implements AppointmentService {
-    private AppointmentDAO appointmentDao;
+    @Autowired
+    private AppointmentRepository appointmentDao;
 
     @Override
     public Appointment getAppointmentById(long id) {

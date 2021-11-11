@@ -1,6 +1,7 @@
 package org.structure.services.impl;
 
-import org.structure.dao.DoctorDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.structure.repository.DoctorRepository;
 import org.structure.models.Doctor;
 import org.structure.models.Speciality;
 import org.structure.services.DoctorService;
@@ -8,30 +9,31 @@ import org.structure.services.DoctorService;
 import java.util.List;
 
 public class DoctorServiceImpl implements DoctorService {
-    private DoctorDAO doctorDAO;
+    @Autowired
+    private DoctorRepository doctorRepository;
 
-    public DoctorServiceImpl(DoctorDAO doctorDao) {
-        this.doctorDAO = doctorDao;
+    public DoctorServiceImpl(DoctorRepository doctorRepository) {
+        this.doctorRepository = doctorRepository;
     }
 
     @Override
     public void addDoctor(Doctor doctor) {
-        doctorDAO.addDoctor(doctor);
+        doctorRepository.save(doctor);
     }
 
     @Override
     public Doctor getDoctor(Long id) {
-        return doctorDAO.getDoctor(id);
+        return doctorRepository.getById(id);
     }
 
     @Override
     public List<Doctor> getAllDoctors() {
-        return doctorDAO.getAllDoctors();
+        return doctorRepository.findAll();
     }
 
     @Override
     public List<Doctor> getAllDoctorsBySpeciality(Speciality speciality) {
-        return doctorDAO.getAllDoctorsBySpeciality(speciality);
+        return doctorRepository.findAllBySpeciality(speciality);
     }
 
     @Override
@@ -41,6 +43,6 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public void deleteDoctor(Long id) {
-        doctorDAO.deleteDoctor(id);
+        doctorRepository.deleteById(id);
     }
 }

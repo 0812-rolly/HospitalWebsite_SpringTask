@@ -5,7 +5,7 @@
 </head>
 <div align="center">
     <h1>Delete user form</h1>
-    <form action="/delete-patient" method="post" >
+    <form action="patient-delete" method="post" >
         <table>
             <tr>
                 <td>Enter patient id</td>

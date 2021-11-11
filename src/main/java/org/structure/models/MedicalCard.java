@@ -1,24 +1,31 @@
 package org.structure.models;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name = "medCard")
 public class MedicalCard {
-    private Long userId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "patient_id", referencedColumnName = "id")
+    private Patient patient;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "medCard")
     private List<Appointment> appointments;
 
-    public Long getUserId() {
-        return userId;
+    public Long getId() {
+        return id;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public Patient getPatient() {
+        return patient;
     }
 
-    public List<Appointment> getAppointments() {
-        return appointments;
-    }
-
-    public void setAppointments(List<Appointment> appointments) {
-        this.appointments = appointments;
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 }

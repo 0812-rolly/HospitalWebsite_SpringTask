@@ -1,6 +1,12 @@
 package org.structure.models;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="patient")
 public class Patient {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     public String fullName;
     private String phoneNumber;
