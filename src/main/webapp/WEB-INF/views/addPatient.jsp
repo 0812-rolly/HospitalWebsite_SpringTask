@@ -3,8 +3,10 @@
 <head>
 </head>
 <body>
+
 <div align="center">
     <h1>Add patient form</h1>
+
     <form action="patient-add" method="post" >
         <table>
             <tr>
