@@ -112,7 +112,7 @@
                 <version>9.4.12.v20180830</version>
                 <configuration>
                     <httpConnector>
-                        <port>9972</port>
+                        <port>9971</port>
                     </httpConnector>
                 </configuration>
             </plugin>
