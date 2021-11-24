@@ -1,13 +1,12 @@
-<html lang="en" xmlns:th="http://thymeleaf.org">
-<title>Hospital Website</title>
-
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<title>Hospital Spring App</title>
 <head>
 </head>
 <body>
-<br>
-<br>
-    <div th:each="patient : ${patients}" align="center">
-        <p th:text="${patient.toString()}"></p>
-    </div>
+<h1 align="center">All patients:</h1>
+<div align="center">
+    <p>"${patients}"</p>
+</div>
 </body>
 </html>

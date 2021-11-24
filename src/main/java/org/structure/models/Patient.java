@@ -11,7 +11,10 @@ public class Patient {
     public String fullName;
     private String phoneNumber;
     private String email;
-    private String login;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "login_id", referencedColumnName = "id")
+    private Login login;
     private String password;
 
     public Long getId() {
@@ -46,11 +49,11 @@ public class Patient {
         this.email = email;
     }
 
-    public String getLogin() {
+    public Login getLogin() {
         return login;
     }
 
-    public void setLogin(String login) {
+    public void setLogin(Login login) {
         this.login = login;
     }
 
@@ -64,7 +67,7 @@ public class Patient {
 
     @Override
     public String toString() {
-        return "Id: " + id + "   Full name: " + fullName + "   Phone number: " + phoneNumber + "   Email: " + email;
+        return "Full name: " + fullName + "   Phone number: " + phoneNumber + "   Email: " + email;
     }
 }
 

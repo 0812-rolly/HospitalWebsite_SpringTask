@@ -1,20 +1,14 @@
 <html>
-<title>Hospital Website</title>
+<title>Hospital Spring App</title>
 <head>
-
 </head>
+<body>
 <div align="center">
-    <h1>Delete user form</h1>
-    <form action="patient-delete" method="post" >
-        <table>
-            <tr>
-                <td>Enter patient id</td>
-                <td><input type="text" name="id"/></td>
-            </tr>
-        </table>
-        <br>
-        <input type="submit" value="Delete"/>
-    </form>
+	<h1>Delete account</h1>
+	<form action="/patient/patient-delete" method="post">
+		<input type="submit" value="Delete current user account"/>
+		<br>
+	</form>
 </div>
 </body>
 </html>

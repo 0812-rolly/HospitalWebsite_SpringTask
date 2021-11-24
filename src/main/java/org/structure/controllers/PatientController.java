@@ -1,10 +1,12 @@
 package org.structure.controllers;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.structure.models.Doctor;
+import org.structure.models.Login;
 import org.structure.models.Patient;
 import org.structure.services.PatientService;
 
@@ -15,11 +17,21 @@ import java.util.List;
 
 @Controller
 @RequestMapping("patient")
+@RequiredArgsConstructor
 public class PatientController {
 
     private final PatientService patientService;
 
-    public PatientController(PatientService patientService){ this.patientService = patientService;}
+    @GetMapping("home-page")
+    public ModelAndView homePage(){
+        Patient patient = patientService.getPatientByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+        ModelAndView modelAndView = new ModelAndView("patientHomePage");
+        modelAndView.addObject("name", patient.getFullName());
+        modelAndView.addObject("login", patient.getLogin());
+        modelAndView.addObject("phone", patient.getPhoneNumber());
+        modelAndView.addObject("email", patient.getEmail());
+        return modelAndView;
+    }
 
     @GetMapping("/patient-add")
     public ModelAndView addPatientPage() {
@@ -59,39 +71,32 @@ public class PatientController {
         return new ModelAndView("addPatient");
     }
 
-    @PostMapping("/patient-update")
-    public ModelAndView updateRequest(HttpServletRequest request) {
-        String id = request.getParameter("id");
-        String type = request.getParameter("parameter");
-        String newValue = request.getParameter("newValue");
-        updatePatient(id, type, newValue);
-        return new ModelAndView("updatePatient");
-    }
-
-    @PostMapping("/patient-delete")
-    public ModelAndView deleteRequest(HttpServletRequest request) {
-        String id = request.getParameter("id");
-        deletePatient(id);
-        return new ModelAndView("deletePatient");
-    }
-
     private void addNewPatient(String name, String number, String email, String login, String password){
         Patient patient = new Patient();
         patient.setFullName(name);
         patient.setPhoneNumber(number);
         patient.setEmail(email);
-        patient.setLogin(login);
+        patient.setLogin(new Login(0, login, null, null));
         patient.setPassword(password);
 
         patientService.addPatient(patient);
     }
 
-    private void updatePatient(String id, String parameter, String newValue){
-        Patient patient = patientService.getPatient(Long.parseLong(id));
-        patientService.updatePatient(Long.parseLong(id), parameter, newValue);
+    @PostMapping("/patient-update")
+    public ModelAndView updateRequest(HttpServletRequest request) {
+        String type = request.getParameter("parameter");
+        String newValue = request.getParameter("newValue");
+        updatePatient(type, newValue);
+        return new ModelAndView("updatePatient");
     }
 
-    private void deletePatient(String id){
-        patientService.deletePatient(Long.parseLong(id));
+    private void updatePatient(String parameter, String newValue){
+        patientService.updatePatient(SecurityContextHolder.getContext().getAuthentication().getName(), parameter, newValue);
+    }
+
+    @PostMapping("/patient-delete")
+    private String deletePatient(){
+        patientService.deletePatientByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+        return "redirect:/logout";
     }
 }

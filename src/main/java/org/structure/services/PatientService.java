@@ -5,13 +5,15 @@ import org.structure.models.Patient;
 import java.util.List;
 
 public interface PatientService {
+    Patient getPatientByLogin(String login);
+
     void addPatient(Patient patient);
 
     Patient getPatient(Long id);
 
     List<Patient> getAllPatients();
 
-    void updatePatient(Long id, String parameter, String newValue);
+    void updatePatient(String login, String parameter, String newValue);
 
-    void deletePatient(Long id);
+    void deletePatientByLogin(String login);
 }

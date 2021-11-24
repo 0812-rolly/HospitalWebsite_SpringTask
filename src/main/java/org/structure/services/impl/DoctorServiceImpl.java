@@ -1,6 +1,10 @@
 package org.structure.services.impl;
 
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import org.structure.repository.DoctorRepository;
 import org.structure.models.Doctor;
 import org.structure.models.Speciality;
@@ -8,22 +12,23 @@ import org.structure.services.DoctorService;
 
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class DoctorServiceImpl implements DoctorService {
-    @Autowired
-    private DoctorRepository doctorRepository;
 
-    public DoctorServiceImpl(DoctorRepository doctorRepository) {
-        this.doctorRepository = doctorRepository;
-    }
+    private final DoctorRepository doctorRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void addDoctor(Doctor doctor) {
+        doctor.setPassword(passwordEncoder.encode(doctor.getPassword()));
         doctorRepository.save(doctor);
     }
 
     @Override
-    public Doctor getDoctor(Long id) {
-        return doctorRepository.getById(id);
+    @SneakyThrows
+    public Doctor getDoctor(String login) {
+        return doctorRepository.findDoctorByLoginLogin(login).orElseThrow(Exception::new);
     }
 
     @Override
@@ -37,12 +42,27 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public void updateDoctor(Doctor doctor, String parameter, String newValue) {
+    @SneakyThrows
+    public void updateDoctor(String login, String parameter, String newValue) {
+        Doctor doctor = doctorRepository.findDoctorByLoginLogin(login).orElseThrow(Exception::new);
 
+        if (parameter.equals("name")) {
+            doctor.setFullName(newValue);
+        } else if (parameter.equals("number")) {
+            doctor.setPhoneNumber(newValue);
+        } else if (parameter.equals("email")) {
+            doctor.setEmail(newValue);
+        } else if (parameter.equals("password")) {
+            doctor.setPassword(passwordEncoder.encode(newValue));
+        }
+
+        doctorRepository.save(doctor);
     }
 
     @Override
-    public void deleteDoctor(Long id) {
-        doctorRepository.deleteById(id);
+    @SneakyThrows
+    public void deleteDoctorByLogin(String login) {
+        Doctor doctor = doctorRepository.findDoctorByLoginLogin(login).orElseThrow(Exception::new);
+        doctorRepository.deleteById(doctor.getId());
     }
 }
